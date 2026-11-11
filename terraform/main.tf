@@ -24,7 +24,7 @@ import {
 import {
   to = aws_subnet.public-subnet
   identity = {
-    id = "subnet-0be4f211815722b30"
+    id = "subnet-07415dd6c7fafb2c4"
   }
 }
 
