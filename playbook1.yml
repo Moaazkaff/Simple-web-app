@@ -101,3 +101,9 @@
         name: jenkins
         state: restarted
         enabled: true
+
+    # installing Ansible
+    - name: Install ansible
+      ansible.builtin.apt:
+        name: ansible
+        state: present
