@@ -1,0 +1,23 @@
+---
+
+- name: Build a container using ansible 
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: stop current running front-container
+      command: docker stop front-container
+      ignore_errors: yes
+
+    - name: Remove stopped front-container
+      command: docker rm front-container
+      ignore_errors: yes
+
+    - name: Remove front-image image
+      command: docker rmi front-image
+      ignore_errors: yes
+
+    - name: build docker image using Dockerfile
+      command: docker build -t front-image .
+
+    - name: Create tag to the image and create a container from the image
+      command: docker run -d --name front-container -p 80:80 front-image
