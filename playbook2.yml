@@ -13,11 +13,14 @@
       ignore_errors: yes
 
     - name: Remove front-image image
-      command: docker rmi front-image
+      command: docker rmi moaaz65/front-image
       ignore_errors: yes
 
     - name: build docker image using Dockerfile
-      command: docker build -t front-image .
+      command: docker build -t moaaz65/front-image .
+
+    - name: Push image to dockerhub
+      command: docker push moaaz65/front-image
 
     - name: Create tag to the image and create a container from the image
       command: docker run -d --name front-container -p 80:80 front-image
