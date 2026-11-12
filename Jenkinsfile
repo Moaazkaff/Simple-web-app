@@ -18,5 +18,11 @@ pipeline{
                 sh 'ansible-playbook playbook2.yml'
             }
         }
+
+        stage('Dockerhub logout'){
+            steps{
+                sh 'docker logout'
+            }
+        }
     }
 }
