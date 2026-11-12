@@ -33,6 +33,10 @@ resource "aws_vpc" "my-vpc" {
     tags = {
         Name = "MY-VPC"
     }
+
+    lifecycle {
+      prevent_destroy = true
+    }
 }
 
 resource "aws_subnet" "public-subnet" {
@@ -42,12 +46,20 @@ resource "aws_subnet" "public-subnet" {
     tags = {
         Name = "Public-1A"
     }
+
+    lifecycle {
+      prevent_destroy = true
+    }
 }
 
 resource "aws_security_group" "ec2-jenkins" {
   vpc_id = aws_vpc.my-vpc.id
   name = "ec2-jenkins"
-  description = "Allow port port 80 , 5000 , 8080 inbound and all outbound trafic"
+  description = "Allow port port 80 , 22 , 8080 inbound and all outbound trafic"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "rule1" {
@@ -56,6 +68,10 @@ resource "aws_vpc_security_group_ingress_rule" "rule1" {
   from_port         = 80
   ip_protocol       = "tcp"
   to_port           = 80
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "rule2" {
@@ -64,6 +80,10 @@ resource "aws_vpc_security_group_ingress_rule" "rule2" {
   from_port = 8080
   to_port = 8080
   ip_protocol = "tcp"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "rule3" {
@@ -72,12 +92,20 @@ resource "aws_vpc_security_group_ingress_rule" "rule3" {
   from_port = 22
   ip_protocol = "tcp"
   cidr_ipv4 = var.my_public_ip
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_vpc_security_group_egress_rule" "all-outbound" {
   security_group_id = aws_security_group.ec2-jenkins.id
   ip_protocol = "-1"
   cidr_ipv4 = "0.0.0.0/0"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_instance" "jenkins_ec2" {
@@ -89,5 +117,9 @@ resource "aws_instance" "jenkins_ec2" {
   key_name = var.key_pair
   tags = {
     Name = "jenkins-ec2" 
+  }
+
+  lifecycle {
+    prevent_destroy = false
   }
 }
