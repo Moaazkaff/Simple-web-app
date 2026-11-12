@@ -7,12 +7,16 @@ pipeline{
 
     stages{
 
-        steps('Dockerhub login'){
-            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        stage('Dockerhub login'){
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
         }
 
-        steps('Build and Push Dockerfile'){
-            sh 'ansible-playbook playbook2.yml'
+        stage('Build and Push Dockerfile'){
+            steps{
+                sh 'ansible-playbook playbook2.yml'
+            }
         }
     }
 }
