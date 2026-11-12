@@ -23,4 +23,4 @@
       command: docker push moaaz65/front-image
 
     - name: Create tag to the image and create a container from the image
-      command: docker run -d --name front-container -p 80:80 front-image
+      command: docker run -d --name front-container -p 80:80 moaaz65/front-image
