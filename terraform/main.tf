@@ -57,9 +57,7 @@ resource "aws_security_group" "ec2-jenkins" {
   name = "ec2-jenkins"
   description = "Allow port port 80 , 22 , 8080 inbound and all outbound trafic"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+
 }
 
 resource "aws_vpc_security_group_ingress_rule" "rule1" {
@@ -69,9 +67,7 @@ resource "aws_vpc_security_group_ingress_rule" "rule1" {
   ip_protocol       = "tcp"
   to_port           = 80
 
-  lifecycle {
-    prevent_destroy = true
-  }
+
 }
 
 resource "aws_vpc_security_group_ingress_rule" "rule2" {
@@ -81,9 +77,7 @@ resource "aws_vpc_security_group_ingress_rule" "rule2" {
   to_port = 8080
   ip_protocol = "tcp"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+
 }
 
 resource "aws_vpc_security_group_ingress_rule" "rule3" {
@@ -93,9 +87,7 @@ resource "aws_vpc_security_group_ingress_rule" "rule3" {
   ip_protocol = "tcp"
   cidr_ipv4 = var.my_public_ip
 
-  lifecycle {
-    prevent_destroy = true
-  }
+
 }
 
 resource "aws_vpc_security_group_egress_rule" "all-outbound" {
@@ -103,9 +95,7 @@ resource "aws_vpc_security_group_egress_rule" "all-outbound" {
   ip_protocol = "-1"
   cidr_ipv4 = "0.0.0.0/0"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+
 }
 
 resource "aws_instance" "jenkins_ec2" {
@@ -117,9 +107,5 @@ resource "aws_instance" "jenkins_ec2" {
   key_name = var.key_pair
   tags = {
     Name = "jenkins-ec2" 
-  }
-
-  lifecycle {
-    prevent_destroy = false
   }
 }
